@@ -14,11 +14,13 @@
     "postinstall": "touch secrets.js",
     "seed": "node script/seed.js",
     "start": "node server",
-    "start-dev": "NODE_ENV='development' npm run build-client-watch & npm run start-server",
+    "start-dev":
+      "NODE_ENV='development' npm run build-client-watch & npm run start-server",
     "start-server": "nodemon server -e html,js,scss --ignore public",
-    "test": "NODE_ENV='test' DATABASE_URL='postgres://localhost:5432/boilermaker-test' mocha ./server/**/*.spec.js ./server/**/**/*.spec.js ./client/**/*.spec.js --compilers js:babel-register"
+    "test":
+      "NODE_ENV='test' DATABASE_URL='postgres://localhost:5432/boilermaker-test' mocha ./server/**/*.spec.js ./server/**/**/*.spec.js ./client/**/*.spec.js --compilers js:babel-register"
   },
-  "author": "",
+  "author": "@mueedc",
   "license": "ISC",
   "dependencies": {
     "axios": "^0.15.3",
@@ -41,8 +43,7 @@
     "redux": "^3.6.0",
     "redux-logger": "^2.8.1",
     "redux-thunk": "^2.2.0",
-    "sequelize": "^4.3.1",
-    "socket.io": "^2.0.3"
+    "sequelize": "^4.3.1"
   },
   "devDependencies": {
     "axios-mock-adapter": "^1.9.0",
@@ -57,8 +58,13 @@
     "enzyme": "^3.0.0",
     "enzyme-adapter-react-16": "^1.0.0",
     "eslint": "^4.10.0",
-    "eslint-config-fullstack": "^3.0.0",
+    "eslint-config-standard": "^11.0.0-beta.0",
+    "eslint-config-standard-react": "^5.0.0",
+    "eslint-plugin-import": "^2.8.0",
+    "eslint-plugin-node": "^5.2.1",
+    "eslint-plugin-promise": "^3.6.0",
     "eslint-plugin-react": "^7.4.0",
+    "eslint-plugin-standard": "^3.0.1",
     "mocha": "^3.3.0",
     "nodemon": "^1.12.1",
     "react-test-renderer": "^16.0.0",
