@@ -28,7 +28,7 @@ export const logout = () => dispatch =>
     .catch(err => console.error(err))
 
 // reducer
-export default function(state = {}, action) {
+export default function (state = {}, action) {
   switch (action.type) {
     case GET_USER:
       return action.payload
