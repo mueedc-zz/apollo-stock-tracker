@@ -15,7 +15,7 @@ router.use('/:symbol', (req, res, next) => {
       ? next(err)
       : res.json({
         symbol: quotes.price.symbol,
-        marketOpen: quotes.price.regularMarketOpen
+        marketOpenPrice: quotes.price.regularMarketOpen
       })
   })
 })
