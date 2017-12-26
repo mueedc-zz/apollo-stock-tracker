@@ -11,7 +11,12 @@ router.get('/', (req, res, next) => {
 
 router.use('/:symbol', (req, res, next) => {
   getQuote({ symbol: req.params.symbol, modules: ['price'] }, (err, quotes) => {
-    err ? next(err) : res.send({ quotes })
+    err
+      ? next(err)
+      : res.json({
+        symbol: quotes.price.symbol,
+        marketOpen: quotes.price.regularMarketOpen
+      })
   })
 })
 
