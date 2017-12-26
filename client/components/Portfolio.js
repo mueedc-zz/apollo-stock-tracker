@@ -1,8 +1,11 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import PortfolioItem from './PortfolioItem'
+import AddToPortfolio from './AddToPortfolio'
 
-const Portfolio = () => (
+const Portfolio = ({ stock }) => (
   <div>
+    <AddToPortfolio />
     <table>
       <thead>
         <tr>
@@ -13,12 +16,14 @@ const Portfolio = () => (
           <th>High Threshhold</th>
         </tr>
       </thead>
-      <tbody>{console.log('stock info goes here')}</tbody>
+      <tbody>
+        <PortfolioItem />
+      </tbody>
     </table>
   </div>
 )
 
-const mapState = null
+const mapState = ({ stock }) => ({ stock })
 const mapDispatch = null
 
 export default connect(mapState, mapDispatch)(Portfolio)
