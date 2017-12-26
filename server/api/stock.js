@@ -14,3 +14,15 @@ router.use('/:symbol', (req, res, next) => {
     err ? next(err) : res.send({ quotes })
   })
 })
+
+router.post('/', (req, res, next) => {
+  Stock.create(req.body)
+    .then(() => res.sendStatus(201))
+    .catch(next)
+})
+
+router.delete('/:symbol', (req, res, next) => {
+  Stock.delete(req.params.symbol)
+    .then(() => res.sendStatus(204))
+    .catch(next)
+})

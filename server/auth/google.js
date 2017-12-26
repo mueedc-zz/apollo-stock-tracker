@@ -26,8 +26,8 @@ if (!process.env.GOOGLE_CLIENT_ID || !process.env.GOOGLE_CLIENT_SECRET) {
             foundUser
               ? done(null, foundUser)
               : User.create({ name, email, googleId }).then(createdUser =>
-                  done(null, createdUser)
-                )
+                done(null, createdUser)
+              )
         )
         .catch(done)
     }
@@ -40,7 +40,7 @@ if (!process.env.GOOGLE_CLIENT_ID || !process.env.GOOGLE_CLIENT_SECRET) {
   router.get(
     '/callback',
     passport.authenticate('google', {
-      successRedirect: '/home',
+      successRedirect: '/portfolio',
       failureRedirect: '/login'
     })
   )

@@ -5,13 +5,13 @@ import { GET_USER, getUser, removeUser } from '../actions/user'
 // thunk middleware
 export const me = () => dispatch =>
   axios
-    .get('/api/me')
+    .get('/auth/me')
     .then(res => dispatch(getUser(res.data)))
     .catch(err => console.error(err))
 
 export const auth = (userBody, method) => dispatch =>
   axios
-    .post(`/api/${method}`, userBody)
+    .post(`/auth/${method}`, userBody)
     .then(res => {
       console.log('userBody: ', userBody)
       dispatch(getUser(res.data))
@@ -20,7 +20,7 @@ export const auth = (userBody, method) => dispatch =>
 
 export const logout = () => dispatch =>
   axios
-    .post('/api/logout')
+    .post('/auth/logout')
     .then(() => {
       dispatch(removeUser())
       history.push('/')
