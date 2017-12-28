@@ -31,7 +31,7 @@ export const deleteStock = symbol => dispatch =>
   axios
     .delete(`/api/stock/${symbol}`)
     .then(() => dispatch(removeStock()))
-    .catch(err => console.error(`Deletiion unsuccessful: `, err))
+    .catch(err => console.error(`Deletion unsuccessful: `, err))
 
 // reducer
 export default function (state = defaultState, action) {
