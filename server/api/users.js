@@ -3,9 +3,7 @@ const { User } = require('../db/models')
 module.exports = router
 
 router.get('/', (req, res, next) => {
-  User.findAll({
-    attributes: ['id', 'email']
-  })
+  User.findAll({ include: [{ all: true }] })
     .then(users => res.json(users))
     .catch(next)
 })

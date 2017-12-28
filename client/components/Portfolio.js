@@ -1,5 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import R from 'ramda'
 import PortfolioItem from './PortfolioItem'
 import AddToPortfolio from './AddToPortfolio'
 
@@ -17,7 +18,13 @@ const Portfolio = ({ stock }) => (
         </tr>
       </thead>
       <tbody>
-        <PortfolioItem />
+        {console.log(stock)
+        // stock &&
+        // R.mapObjIndexed(
+        //   (value, key) => <PortfolioItem key={key} stock={value} />,
+        //   stock
+        // )
+        }
       </tbody>
     </table>
   </div>
