@@ -1,6 +1,6 @@
 import axios from 'axios'
 import history from '../../history'
-import { GET_USER, getUser, removeUser } from '../actions/user'
+import { GET_USER, REMOVE_USER, getUser, removeUser } from '../actions/user'
 
 // thunk middleware
 export const me = () => dispatch =>
@@ -32,6 +32,8 @@ export default function (state = {}, action) {
   switch (action.type) {
     case GET_USER:
       return action.payload
+    case REMOVE_USER:
+      return state
     default:
       return state
   }

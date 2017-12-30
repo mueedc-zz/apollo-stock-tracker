@@ -3,7 +3,19 @@ import { connect } from 'react-redux'
 import { addStockToPortfolio } from '../store'
 
 const AddToPortfolio = ({ addStockToPortfolio }) => (
-  <div>{console.log(addStockToPortfolio)}</div>
+  <form name="Add new stock">
+    <label>
+      Enter a valid stock symbol
+      <input
+        name="stock"
+        type="text"
+        placeholder="Enter a valid stock symbol"
+      />
+    </label>
+    <button type="submit">
+      <span className="addButton" />
+    </button>
+  </form>
 )
 
 const mapDispatch = { addStockToPortfolio }

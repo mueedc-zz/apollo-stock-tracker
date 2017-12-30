@@ -18,7 +18,7 @@ const Portfolio = ({ stock }) => (
         </tr>
       </thead>
       <tbody>
-        {console.log(stock)
+        {console.log('stock:', stock)
         // stock &&
         // R.mapObjIndexed(
         //   (value, key) => <PortfolioItem key={key} stock={value} />,

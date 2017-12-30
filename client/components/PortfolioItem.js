@@ -1,12 +1,23 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { stock, removeStock } from '../store'
+import { removeStock } from '../store'
 
 const PortfolioItem = ({ stock, removeStock }) => (
-  <div>{console.log('portfolio item')}</div>
+  <tr>
+    <td>{console.log('stock symbol', stock.symbol)}</td>
+    <td>{console.log('stock price', stock.price)}</td>
+    <td>{console.log('stock sell point')}</td>
+    <td>{console.log('stock high since buy')}</td>
+    <td>{console.log('stock sell point since high since buy')}</td>
+    <td>
+      <button>
+        <span className="removeButton" />
+      </button>
+    </td>
+  </tr>
 )
 
-const mapState = ({ stock }) => ({ stock })
+const mapState = null
 const mapDispatch = { removeStock }
 
 export default connect(mapState, mapDispatch)(PortfolioItem)
