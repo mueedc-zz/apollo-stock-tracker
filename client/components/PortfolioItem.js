@@ -17,7 +17,6 @@ const PortfolioItem = ({ stock, removeStock }) => (
   </tr>
 )
 
-const mapState = null
 const mapDispatch = { removeStock }
 
-export default connect(mapState, mapDispatch)(PortfolioItem)
+export default connect(null, mapDispatch)(PortfolioItem)

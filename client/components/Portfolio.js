@@ -31,6 +31,5 @@ const Portfolio = ({ stock }) => (
 )
 
 const mapState = ({ stock }) => ({ stock })
-const mapDispatch = null
 
-export default connect(mapState, mapDispatch)(Portfolio)
+export default connect(mapState)(Portfolio)
