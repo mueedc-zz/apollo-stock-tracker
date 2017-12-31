@@ -1,18 +1,14 @@
 import axios from 'axios'
-import R from 'ramda'
 import {
   GET_STOCK,
   REMOVE_STOCK,
   ADD_STOCK,
+  EDIT_STOCK,
   getStock,
   removeStock,
-  addStock
+  addStock,
+  editStock
 } from '../actions/stock'
-
-const defaultState = {
-  symbol: '',
-  price: ''
-}
 
 // thunk middleware
 export const grabStock = symbol => dispatch =>
@@ -33,18 +29,25 @@ export const deleteStock = symbol => dispatch =>
     .then(() => dispatch(removeStock()))
     .catch(err => console.error(`Deletion unsuccessful: `, err))
 
+export const updateStock = symbol => dispatch =>
+  axios
+    .put(`/api/stock/${symbol.id}`, symbol)
+    .then(res => dispatch(editStock(res.data)))
+    .catch(err => console.error(`Updating ${symbol} price unsuccessful: `, err))
+
 // reducer
-export default function (state = defaultState, action) {
+export default function (state = [], action) {
   switch (action.type) {
     case GET_STOCK:
-      return action.payload
+      return action.stock
     case ADD_STOCK:
-      return Object.assign({}, state, {
-        symbol: action.payload.symbol,
-        price: action.payload.price
-      })
+      return [action.stock, ...state]
     case REMOVE_STOCK:
-      return R.omit([action.payload.symbol], state)
+      return state.filter(stock => stock.symbol !== action.stock.symbol)
+    case EDIT_STOCK:
+      return state.map(
+        stock => (stock.symbol === action.stock.symbol ? action.stock : stock)
+      )
     default:
       return state
   }

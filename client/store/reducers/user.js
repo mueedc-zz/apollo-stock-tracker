@@ -31,7 +31,7 @@ export const logout = () => dispatch =>
 export default function (state = {}, action) {
   switch (action.type) {
     case GET_USER:
-      return action.payload
+      return action.user
     case REMOVE_USER:
       return state
     default:
