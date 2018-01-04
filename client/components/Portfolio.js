@@ -18,8 +18,8 @@ const Portfolio = ({ stock }) => (
       </thead>
       <tbody>
         {console.log('stock:', stock)
-        stock &&
-        stock.map(stck => (<PortfolioItem key={stck.id} stock={stck} />))
+        // stock &&
+        // stock.map(stck => (<PortfolioItem key={stck.id} stock={stck} />))
         }
       </tbody>
     </table>
