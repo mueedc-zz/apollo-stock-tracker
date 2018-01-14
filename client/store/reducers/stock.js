@@ -11,11 +11,11 @@ import {
 } from '../actions/stock'
 
 // thunk middleware
-export const grabStock = symbol => dispatch =>
+export const grabStock = () => dispatch =>
   axios
-    .get(`/api/stock/${symbol}`)
+    .get(`/api/users`)
     .then(res => dispatch(getStock(res.data)))
-    .catch(err => console.error(`Retrieving ${symbol} unsuccessful: `, err))
+    .catch(err => console.error(`Retrieving portfolio unsuccessful: `, err))
 
 export const addStockToPortfolio = symbol => dispatch =>
   axios
@@ -33,7 +33,9 @@ export const updateStock = symbol => dispatch =>
   axios
     .put(`/api/stock/${symbol.id}`, symbol)
     .then(res => dispatch(editStock(res.data)))
-    .catch(err => console.error(`Updating ${symbol} price unsuccessful: `, err))
+    .catch(err =>
+      console.error(`Updating ${symbol} price unsuccessful: `, err)
+    )
 
 // reducer
 export default function (state = [], action) {
