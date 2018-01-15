@@ -1,5 +1,5 @@
 const db = require('../server/db')
-const { User, Stock } = require('../server/db/models')
+const { User, Stock, Portfolio } = require('../server/db/models')
 
 async function seed () {
   await db.sync({ force: true })
@@ -18,20 +18,25 @@ async function seed () {
     Stock.create({
       symbol: 'AAPL',
       currentPrice: 200,
-      userId: 1
+      portfolioId: 1
     }),
     Stock.create({
       symbol: 'V',
       currentPrice: 100,
-      userId: 2
+      portfolioId: 2
     }),
     Stock.create({
       symbol: 'TSLA',
       currentPrice: 280,
-      userId: 1
+      portfolioId: 3
     })
   ])
 
+  const portfolio = await Promise.all([
+    Portfolio.create({ status: 'open', userId: 1 }),
+    Portfolio.create({ status: 'open', userId: 2 }),
+    Portfolio.create({ status: 'open', userId: 3 })
+  ])
   // stocks.forEach(stock => stock.addUser(users))
   // users.forEach(user => user.addStock(stocks))
 
