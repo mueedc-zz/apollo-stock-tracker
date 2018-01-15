@@ -9,7 +9,7 @@ router.param('id', (req, res, next, id) => {
       next()
       return null
     })
-    .catch(next )
+    .catch(next)
 })
 
 router.get('/', (req, res, next) => {
@@ -18,18 +18,20 @@ router.get('/', (req, res, next) => {
     .catch(next)
 })
 
-router.get('/session', (req, res,next) => {
+router.get('/session', (req, res, next) => {
   if (req.user) {
-    Portfolio.findOne({where: {
-      userId: req.user.id,
-      status: open
-    }})
+    Portfolio.findOne({
+      where: {
+        userId: req.user.id,
+        status: open
+      }
+    })
       .then(foundPortfolio => {
         if (foundPortfolio) req.session.portfolio = foundPortfolio
         res.send(req.session.portfolio)
       })
       .catch(next)
-  } else res.send(req.session.portfolio) 
+  } else res.send(req.session.portfolio)
 })
 
 router.delete('/session', (req, res, next) => {
@@ -39,13 +41,14 @@ router.delete('/session', (req, res, next) => {
 
 router.post('/', (req, res, next) => {
   if (req.body.userId) {
-    Portfolio.findOrCreate({where:
-      userId: req.body.userId,
-      status: 'open'
+    Portfolio.findOrCreate({
+      where: {
+        userId: req.body.userId,
+        status: 'open'
+      }
     })
       .spread((portfolio, createdPortfolioBool) =>
-        Stock.create(req.body)
-          .then(stock => stock.setPortfolio(portfolio))
+        Stock.create(req.body).then(stock => stock.setPortfolio(portfolio))
       )
       .then(stock => {
         req.session.portfolio.push(stock)
@@ -58,8 +61,7 @@ router.post('/', (req, res, next) => {
       status: 'open'
     })
       .then(portfolio =>
-        Stock.create(req.body)
-          .then(stock => stock.setPortfolio(portfolio))
+        Stock.create(req.body).then(stock => stock.setPortfolio(portfolio))
       )
       .then(stock => {
         req.session.portfolio.push(stock)
@@ -70,8 +72,10 @@ router.post('/', (req, res, next) => {
 })
 
 router.put('/', (req, res, next) => {
-  req.session.portfolio = req.session.portfolio.filter(sessionStock => (sessionStock.id !== req.body.id))
-  Stock.destroy({where: {id: req.body.id}})
+  req.session.portfolio = req.session.portfolio.filter(
+    sessionStock => sessionStock.id !== req.body.id
+  )
+  Stock.destroy({ where: { id: req.body.id } })
     .then(deletedRows => {
       deletedRows ? res.status(200).send('Stock removed') : res.sendStatus(204)
     })
@@ -79,7 +83,5 @@ router.put('/', (req, res, next) => {
 })
 
 router.put('/:id', (req, res, next) => {
-  req.portfolio.update(req.body)
-    .then(port => res.json(port))
+  req.portfolio.update(req.body).then(port => res.json(port))
 })
-
