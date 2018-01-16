@@ -15,6 +15,7 @@ export const auth = (userBody, method) => dispatch =>
     .then(res => {
       console.log('userBody: ', userBody)
       dispatch(getUser(res.data))
+      // axios.put portfolio
     })
     .catch(error => dispatch(getUser({ error })))
 
