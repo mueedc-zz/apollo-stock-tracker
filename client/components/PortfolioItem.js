@@ -3,15 +3,15 @@ import { connect } from 'react-redux'
 import { removeStock } from '../store'
 
 const PortfolioItem = ({ stock, removeStock }) => (
-  <tr>
+  <tr key={stock.id}>
     <td>{console.log('stock symbol', stock.symbol)}</td>
     <td>{console.log('stock price', stock.price)}</td>
     <td>{console.log('stock sell point')}</td>
     <td>{console.log('stock high since buy')}</td>
     <td>{console.log('stock sell point since high since buy')}</td>
     <td>
-      <button>
-        <span className="removeButton" />
+      <button onClick={() => removeStock(stock.id)}>
+        <span className='removeButton' />
       </button>
     </td>
   </tr>
