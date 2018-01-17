@@ -11,15 +11,9 @@ const Stock = db.define('stock', {
     type: Sequelize.INTEGER,
     allowNull: false
   },
-  sellPrice: {
-    type: Sequelize.DOUBLE
-  },
-  maxSinceBuy: {
-    type: Sequelize.INTEGER
-  },
-  sellPriceSinceMax: {
-    type: Sequelize.INTEGER
-  }
+  sellPrice: Sequelize.DOUBLE,
+  maxSinceBuy: Sequelize.INTEGER,
+  sellPriceSinceMax: Sequelize.INTEGER
 })
 
 module.exports = Stock
@@ -35,5 +29,5 @@ const setSell = stock => {
   }
 }
 
-// Stock.beforeCreate(setSell)
-// Stock.beforeUpdate(setSell)
+Stock.beforeCreate(setSell)
+Stock.beforeUpdate(setSell)

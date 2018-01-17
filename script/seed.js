@@ -8,12 +8,22 @@ async function seed () {
   const users = await Promise.all([
     User.create({
       email: 'cody@email.com',
-      password: '123',
+      password: '123'
     }),
-    User.create({ 
+    User.create({
       email: 'murphy@email.com',
-      password: '123',
+      password: '123'
+    }),
+    User.create({
+      email: 'fake@email.com',
+      password: '321'
     })
+  ])
+
+  const portfolios = await Promise.all([
+    Portfolio.create({ status: 'open', userId: 1 }),
+    Portfolio.create({ status: 'open', userId: 2 }),
+    Portfolio.create({ status: 'open', userId: 3 })
   ])
 
   const stocks = await Promise.all([
@@ -30,18 +40,18 @@ async function seed () {
     Stock.create({
       symbol: 'TSLA',
       currentPrice: 280,
-      portfolioId: 2
+      portfolioId: 3
+    }),
+    Stock.create({
+      symbol: 'FB',
+      currentPrice: 300,
+      portfolioId: 1
     })
   ])
 
-  const portfolios = await Promise.all([
-    Portfolio.create({ status: 'open', userId: 1 }),
-    Portfolio.create({ status: 'open', userId: 2 }),
-  ])
-  // stocks.forEach(stock => stock.addUser(users))
-  // users.forEach(user => user.addStock(stocks))
-
-  console.log(`seeded ${users.length} users, and ${stocks.length} stocks`)
+  console.log(
+    `seeded ${users.length} users, ${stocks.length} stocks, and ${portfolios.length} portfolios`
+  )
   console.log(`seeded successfully`)
 }
 
