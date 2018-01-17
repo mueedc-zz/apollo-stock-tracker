@@ -9,9 +9,11 @@ async function seed () {
     User.create({
       email: 'cody@email.com',
       password: '123',
-      stock: ['AAPL', 'TSLA']
     }),
-    User.create({ email: 'murphy@email.com', password: '123', stock: ['V'] })
+    User.create({ 
+      email: 'murphy@email.com',
+      password: '123',
+    })
   ])
 
   const stocks = await Promise.all([
@@ -28,14 +30,13 @@ async function seed () {
     Stock.create({
       symbol: 'TSLA',
       currentPrice: 280,
-      portfolioId: 3
+      portfolioId: 2
     })
   ])
 
-  const portfolio = await Promise.all([
+  const portfolios = await Promise.all([
     Portfolio.create({ status: 'open', userId: 1 }),
     Portfolio.create({ status: 'open', userId: 2 }),
-    Portfolio.create({ status: 'open', userId: 3 })
   ])
   // stocks.forEach(stock => stock.addUser(users))
   // users.forEach(user => user.addStock(stocks))

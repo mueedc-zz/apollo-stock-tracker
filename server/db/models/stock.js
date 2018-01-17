@@ -35,5 +35,5 @@ const setSell = stock => {
   }
 }
 
-Stock.beforeCreate(setSell)
-Stock.beforeUpdate(setSell)
+// Stock.beforeCreate(setSell)
+// Stock.beforeUpdate(setSell)
