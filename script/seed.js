@@ -45,7 +45,7 @@ async function seed () {
     Stock.create({
       symbol: 'FB',
       currentPrice: 300,
-      portfolioId: 1
+      portfolioId: 3
     })
   ])
 

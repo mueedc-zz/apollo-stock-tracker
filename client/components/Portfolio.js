@@ -17,7 +17,8 @@ const Portfolio = ({ portfolio }) => (
         </tr>
       </thead>
       <tbody>
-        {console.log('portfolio:', portfolio)
+        {
+        // console.log('portfolio:', portfolio)
         portfolio &&
         portfolio.map(stock => (<PortfolioItem key={stock.symbol} portfolio={stock} />))
         }

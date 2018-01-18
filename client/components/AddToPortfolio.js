@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { addStockToPortfolio } from '../store'
+import { addStock } from '../store'
 
 const AddToPortfolio = ({ addStock }) => (
   <form name="Add new stock">

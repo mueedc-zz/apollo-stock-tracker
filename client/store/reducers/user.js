@@ -1,7 +1,7 @@
 import axios from 'axios'
 import history from '../../history'
 import { GET_USER, REMOVE_USER, getUser, removeUser } from '../actions/user'
-import { setSessionPortfolio } from '../actions/portfolio'
+import { fetchPortfolio } from '../actions/portfolio'
 
 // thunk middleware
 export const me = () => dispatch =>
@@ -15,13 +15,14 @@ export const auth = (userBody, method) => dispatch =>
     .post(`/auth/${method}`, userBody)
     .then(res => {
       console.log('userBody: ', userBody)
+      console.log('res: ', res)
       dispatch(getUser(res.data))
-      axios.put(`/api/portfolio/${userBody.portfolioId}`, {
+      axios.put(`/api/portfolio/${res.portfolioId}`, {
         userId: res.data.id
       })
     })
     .then(() => {
-      dispatch(setSessionPortfolio())
+      dispatch(fetchPortfolio())
       history.push('/portfolio')
     })
     .catch(error => dispatch(getUser({ error })))
