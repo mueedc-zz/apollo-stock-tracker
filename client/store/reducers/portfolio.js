@@ -29,8 +29,9 @@ export const addStock = symbol => dispatch =>
   axios
     .get(`/api/stock/${symbol}`)
     .then(res => {
-      console.log(res)
+      console.log('API response data:', res.data)
       dispatch(addToPortfolio(res.data))
+      return axios.post(`/api/stock`, res.data).then(() => console.log('persistence is key'))
     })
     .catch(error => dispatch(addToPortfolio({ error })))
 

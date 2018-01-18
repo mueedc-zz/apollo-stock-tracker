@@ -28,18 +28,11 @@ const Main = ({ children, handleClick, isLoggedIn }) => (
   </div>
 )
 
-const mapState = state => {
-  return {
-    isLoggedIn: !!state.user.id
-  }
-}
-
-const mapDispatch = dispatch => {
-  return {
-    handleClick () {
-      dispatch(logout())
-    }
-  }
-}
+const mapState = state => ({ isLoggedIn: !!state.user.id })
+const mapDispatch = dispatch => ({
+  handleClick () {
+    dispatch(logout())
+   }
+})
 
 export default withRouter(connect(mapState, mapDispatch)(Main))
