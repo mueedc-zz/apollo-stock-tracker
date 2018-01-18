@@ -11,7 +11,7 @@ const PortfolioItem = ({ stock, removeStock }) => (
     <td>{console.log('stock sell point since high since buy')}</td>
     <td>
       <button onClick={() => removeStock(stock.id)}>
-        <span className='removeButton' />
+        <span className='removeButton'>Remove Stock</span>
       </button>
     </td>
   </tr>

@@ -21,13 +21,13 @@ export const fetchPortfolio = () => dispatch =>
 
 export const removeStock = stock => dispatch =>
   axios
-    .put(`/api/stock`, stock)
+    .delete(`/api/stock/${stock}`)
     .then(() => dispatch(removeFromPortfolio()))
     .catch(error => console.error(`Removing ${stock} unsuccessful:`, error))
 
 export const addStock = stock => dispatch =>
   axios
-    .post(`/api/portfolio`, stock)
+    .get(`/api/stock/${stock}`)
     .then(res => {
       dispatch(addToPortfolio(res.data))
     })
