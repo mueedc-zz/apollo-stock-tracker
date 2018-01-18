@@ -25,10 +25,11 @@ export const removeStock = stock => dispatch =>
     .then(() => dispatch(removeFromPortfolio()))
     .catch(error => console.error(`Removing ${stock} unsuccessful:`, error))
 
-export const addStock = stock => dispatch =>
+export const addStock = symbol => dispatch =>
   axios
-    .get(`/api/stock/${stock}`)
+    .get(`/api/stock/${symbol}`)
     .then(res => {
+      console.log(res)
       dispatch(addToPortfolio(res.data))
     })
     .catch(error => dispatch(addToPortfolio({ error })))

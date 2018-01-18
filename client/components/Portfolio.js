@@ -20,7 +20,7 @@ const Portfolio = ({ portfolio }) => (
         {
         // console.log('portfolio:', portfolio)
         portfolio &&
-        portfolio.map(stock => (<PortfolioItem key={stock.symbol} portfolio={stock} />))
+        portfolio.map(stock => (<PortfolioItem key={Date.now()} stock={stock} />))
         }
       </tbody>
     </table>

@@ -12,28 +12,29 @@ class AddToPortfolio extends Component {
   }
 
   handleChange (event) {
+    console.log('changing symbol:', event.target.value)
     this.setState({ symbol: event.target.value })
   }
 
-  return (
-    <form onSubmit={event => this.props.handleSubmit(event)}>
-      <label>Enter a valid stock symbol</label>
-        <input
-          name="stock"
-          type="text"
-          placeholder="Enter a valid stock symbol"
-          onChange={event => this.handleChange(event)}
-        />
-      <button type="submit">Add Stock</button>
-    </form>
-  )
+  render () {
+    const { addStock } = this.props
+    return (
+      <div>
+        <form onSubmit={() => addStock(this.state.symbol)}>
+          <label>Enter a valid stock symbol</label>
+            <input
+              name="stock"
+              type="text"
+              placeholder="Enter a valid stock symbol"
+              onChange={event => this.handleChange(event)}
+            />
+          <button type="submit">Add Stock</button>
+        </form>
+      </div>
+    )
+  }
 }
 
-const mapDispatch = dispatch => {
-  handleSubmit (event) {
-    event.preventDefault()
-    dispatch(addStock(event.target.value))
-  }
-} 
-
+const mapDispatch = { addStock }
 export default connect(null, mapDispatch)(AddToPortfolio)
+

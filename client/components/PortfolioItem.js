@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { removeStock } from '../store'
 
 const PortfolioItem = ({ stock, removeStock }) => (
-  <tr key={stock.id}>
+  <tr> 
     <td>{console.log('stock symbol', stock.symbol)}</td>
     <td>{console.log('stock price', stock.price)}</td>
     <td>{console.log('stock sell point')}</td>
