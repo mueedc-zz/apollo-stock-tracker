@@ -9,7 +9,7 @@ import {
   removeFromPortfolio,
   updatePortfolio,
   setSessionPortfolio,
-  clearPortfolio
+  clearPortfolio,
 } from '../actions/portfolio'
 
 // Thunk middleware
@@ -31,15 +31,18 @@ export const addStock = symbol => dispatch =>
     .then(res => {
       console.log('API response data:', res.data)
       dispatch(addToPortfolio(res.data))
-      return axios.post(`/api/stock`, res.data).then(() => console.log('persistence is key'))
+      return axios
+        .post(`/api/stock`, res.data)
+        .then(res => console.log('added to DB', res))
+        .catch(err => console.error(error.message))(addToPortfolio(res.data))
     })
-    .catch(error => dispatch(addToPortfolio({ error })))
+    .catch(error => dispatch(addToPortfolio({error})))
 
 export const changePortfolio = stock => dispatch =>
   axios
     .put(`/api/stock/${stock.symbol}`, stock)
     .then(res => dispatch(updatePortfolio(res.data)))
-    .catch(error => updatePortfolio({ error }))
+    .catch(error => updatePortfolio({error}))
 
 export const logoutPortfolio = () => dispatch =>
   axios
@@ -48,15 +51,15 @@ export const logoutPortfolio = () => dispatch =>
     .catch(() => dispatch(clearPortfolio()))
 
 // Reducer
-export default function (state = [], action) {
+export default function(state = [], action) {
   switch (action.type) {
     case SET_SESSION_PORTFOLIO:
       return action.stocks
     case ADD_TO_PORTFOLIO:
-      return [...state, action.stocks] 
+      return [...state, action.stocks]
     case UPDATE_PORTFOLIO:
       return state.map(
-        stock => (stock.symbol === action.stock.symbol ? action.stock : stock)
+        stock => (stock.symbol === action.stock.symbol ? action.stock : stock),
       )
     case REMOVE_FROM_PORTFOLIO:
       return state.filter(stock => stock.symbol !== action.stock.symbol)
