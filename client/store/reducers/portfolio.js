@@ -30,7 +30,8 @@ export const addStock = symbol => dispatch =>
     .get(`/api/stock/${symbol}`)
     .then(res => {
       console.log('API response data:', res.data)
-      // dispatch(addToPortfolio(res.data))
+      dispatch(addToPortfolio(res.data))
+      dispatch(persist(res.data))
       // return axios
       //   .post(`/api/stock`, res.data)
       //   .then(res => console.log('added to DB', res))
@@ -38,6 +39,12 @@ export const addStock = symbol => dispatch =>
       //   .catch(err => console.error(error.message))
     })
     .catch(error => dispatch(addToPortfolio({error})))
+
+export const persist = stock => dispatch =>
+  axios
+    .post(`/api/stock`, stock)
+    .then(() => console.log(`${stock} added`))
+    .catch(error => console.error(error.message))
 
 export const changePortfolio = stock => dispatch =>
   axios
@@ -57,7 +64,7 @@ export default function(state = [], action) {
     case SET_SESSION_PORTFOLIO:
       return action.stocks
     case ADD_TO_PORTFOLIO:
-      return [...state, action.stocks]
+      return [...state, action.stock]
     case UPDATE_PORTFOLIO:
       return state.map(
         stock => (stock.symbol === action.stock.symbol ? action.stock : stock),
