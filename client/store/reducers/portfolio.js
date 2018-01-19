@@ -31,20 +31,13 @@ export const addStock = symbol => dispatch =>
     .then(res => {
       console.log('API response data:', res.data)
       dispatch(addToPortfolio(res.data))
-      dispatch(persist(res.data))
-      // return axios
-      //   .post(`/api/stock`, res.data)
-      //   .then(res => console.log('added to DB', res))
-      //   .then(res => dispatch(addToPortfolio(res.data)))
-      //   .catch(err => console.error(error.message))
+      return axios
+        .post(`/api/stock`, res.data)
+        .then(res => console.log('added to DB', res))
+        .then(res => dispatch(addToPortfolio(res.data)))
+        .catch(err => console.error(error.message))
     })
     .catch(error => dispatch(addToPortfolio({error})))
-
-export const persist = stock => dispatch =>
-  axios
-    .post(`/api/stock`, stock)
-    .then(() => console.log(`${stock} added`))
-    .catch(error => console.error(error.message))
 
 export const changePortfolio = stock => dispatch =>
   axios
