@@ -15,14 +15,14 @@ import {
 // Thunk middleware
 export const fetchPortfolio = () => dispatch =>
   axios
-    .get(`/api/portfolio`)
+    .get(`/api/portfolio/session`)
     .then(stocks => dispatch(setSessionPortfolio(stocks.data)))
     .catch(error => console.error(`Fetching portfolio unsuccessful:`, error))
 
 export const removeStock = stock => dispatch =>
   axios
-    .delete(`/api/stock/${stock}`)
-    .then(() => dispatch(removeFromPortfolio()))
+    .put(`/api/stock`, stock)
+    .then(() => dispatch(removeFromPortfolio(stock)))
     .catch(error => console.error(`Removing ${stock} unsuccessful:`, error))
 
 export const addStock = symbol => dispatch =>
@@ -30,11 +30,12 @@ export const addStock = symbol => dispatch =>
     .get(`/api/stock/${symbol}`)
     .then(res => {
       console.log('API response data:', res.data)
-      dispatch(addToPortfolio(res.data))
-      return axios
-        .post(`/api/stock`, res.data)
-        .then(res => console.log('added to DB', res))
-        .catch(err => console.error(error.message))(addToPortfolio(res.data))
+      // dispatch(addToPortfolio(res.data))
+      // return axios
+      //   .post(`/api/stock`, res.data)
+      //   .then(res => console.log('added to DB', res))
+      //   .then(res => dispatch(addToPortfolio(res.data)))
+      //   .catch(err => console.error(error.message))
     })
     .catch(error => dispatch(addToPortfolio({error})))
 

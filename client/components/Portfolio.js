@@ -17,10 +17,12 @@ const Portfolio = ({ portfolio }) => (
         </tr>
       </thead>
       <tbody>
-        {portfolio &&
-          portfolio.map(stock => (
-            <PortfolioItem key={Date.now()} stock={stock} />
-          ))}
+         {
+        // portfolio &&
+        //   portfolio.map(stock => (
+        //     <PortfolioItem key={Date.now()} stock={stock} />
+        //   ))
+           }
       </tbody>
     </table>
   </div>

@@ -6,7 +6,6 @@ export const SET_SESSION_PORTFOLIO = 'SET_SESSION_PORTFOLIO'
 export const CLEAR_PORTFOLIO = 'CLEAR_PORTFOLIO'
 
 // action creators
-
 export const setSessionPortfolio = stocks => ({
   type: SET_SESSION_PORTFOLIO,
   stocks

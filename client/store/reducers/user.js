@@ -1,7 +1,7 @@
 import axios from 'axios'
 import history from '../../history'
 import { GET_USER, REMOVE_USER, getUser, removeUser } from '../actions/user'
-import { fetchPortfolio } from '../actions/portfolio'
+import { fetchPortfolio } from './portfolio' 
 
 // thunk middleware
 export const me = () => dispatch =>
@@ -23,6 +23,7 @@ export const auth = (userBody, method) => dispatch =>
     })
     .then(() => {
       dispatch(fetchPortfolio())
+      console.log('here comes the portfolio')
       history.push('/portfolio')
     })
     .catch(error => dispatch(getUser({ error })))
