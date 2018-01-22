@@ -29,14 +29,10 @@ export const addStock = symbol => dispatch =>
   axios
     .get(`/api/stock/${symbol}`)
     .then(res => {
-      console.log('API response data:', res.data)
       dispatch(addToPortfolio(res.data))
-      // return axios
-      //   .post(`/api/stock`, data)
-      //   .then(res => console.log('added to DB', res))
-      //   .then(res => dispatch(addToPortfolio(res.data)))
-      //   .catch(err => console.error(error.message))
+      return res.data
     })
+    .then(data => axios.post('/api/stock', data)) 
     .catch(error => dispatch(addToPortfolio({error})))
 
 export const changePortfolio = stock => dispatch =>
@@ -60,8 +56,7 @@ export default function(state = [], action) {
       return [...state, action.stock]
     case UPDATE_PORTFOLIO:
       return state.map(
-        stock => (stock.symbol === action.stock.symbol ? action.stock : stock),
-      )
+        stock => (stock.symbol === action.stock.symbol ? action.stock : stock))
     case REMOVE_FROM_PORTFOLIO:
       return state.filter(stock => stock.symbol !== action.stock.symbol)
     case CLEAR_PORTFOLIO:

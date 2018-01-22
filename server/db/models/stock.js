@@ -8,7 +8,7 @@ const Stock = db.define('stock', {
     allowNull: false
   },
   marketOpenPrice: {
-    type: Sequelize.INTEGER,
+    type: Sequelize.DOUBLE,
     allowNull: false
   },
   sellPrice: Sequelize.DOUBLE,

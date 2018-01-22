@@ -21,8 +21,12 @@ router.use('/:symbol', (req, res, next) => {
 })
 
 router.post('/', (req, res, next) => {
-  Stock.create(req.body)
-    .then(() => res.sendStatus(201))
+  Stock.create({
+    symbol: req.body.symbol,
+    marketOpenPrice: req.body.marketOpenPrice,
+    portfolioId: req.body.userId
+  })
+    .then(data => res.sendStatus(201))
     .catch(next)
 })
 
