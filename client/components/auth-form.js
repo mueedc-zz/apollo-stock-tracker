@@ -30,6 +30,7 @@ const mapLogin = state => {
   return {
     name: 'login',
     displayName: 'Login',
+    portfolioId: state.portfolioId,
     error: state.user.error
   }
 }
@@ -38,6 +39,7 @@ const mapSignup = state => {
   return {
     name: 'signup',
     displayName: 'Sign Up',
+    portfolioId: state.portfolioId,
     error: state.user.error
   }
 }

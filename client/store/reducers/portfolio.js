@@ -33,13 +33,13 @@ export const addStock = symbol => dispatch =>
       return res.data
     })
     .then(data => axios.post('/api/stock', data)) 
-    .catch(error => dispatch(addToPortfolio({error})))
+    .catch(error => dispatch(addToPortfolio({ error })))
 
 export const changePortfolio = stock => dispatch =>
   axios
     .put(`/api/stock/${stock.symbol}`, stock)
     .then(res => dispatch(updatePortfolio(res.data)))
-    .catch(error => updatePortfolio({error}))
+    .catch(error => updatePortfolio({ error }))
 
 export const logoutPortfolio = () => dispatch =>
   axios

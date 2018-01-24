@@ -23,7 +23,6 @@ export const auth = (userBody, method) => dispatch =>
     })
     .then(() => {
       dispatch(fetchPortfolio())
-      console.log('here comes the portfolio')
       history.push('/portfolio')
     })
     .catch(error => dispatch(getUser({ error })))
