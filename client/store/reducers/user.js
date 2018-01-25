@@ -17,7 +17,7 @@ export const auth = (userBody, method) => dispatch =>
       console.log('userBody: ', userBody)
       console.log('res: ', res)
       dispatch(getUser(res.data))
-      axios.put(`/api/portfolio/${res.portfolioId}`, {
+      axios.put(`/api/portfolio/${userBody.portfolioId}`, {
         userId: res.data.id
       })
     })

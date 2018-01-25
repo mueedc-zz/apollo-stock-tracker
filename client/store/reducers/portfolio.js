@@ -29,10 +29,10 @@ export const addStock = symbol => dispatch =>
   axios
     .get(`/api/stock/${symbol}`)
     .then(res => {
-      dispatch(addToPortfolio(res.data))
+      axios.post('/api/stock', res.data)
       return res.data
     })
-    .then(data => axios.post('/api/stock', data)) 
+    .then(data => dispatch(addToPortfolio(data)))
     .catch(error => dispatch(addToPortfolio({ error })))
 
 export const changePortfolio = stock => dispatch =>

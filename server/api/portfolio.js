@@ -68,6 +68,17 @@ router.post('/', (req, res, next) => {
         res.json(stock)
       })
       .catch(next)
+  } else {
+    Portfolio.findById(req.body.portfolioId)
+      .then(portfolio => 
+        Portfolio.create(req.body)
+          .then(stock => stock.setPortfolio(portfolio))
+      )
+      .then(stock => {
+        req.session.portfolio.push(stock)
+        res.json(stock)
+      })
+      .catch(next)
   }
 })
 
@@ -85,3 +96,29 @@ router.put('/', (req, res, next) => {
 router.put('/:id', (req, res, next) => {
   req.portfolio.update(req.body).then(port => res.json(port))
 })
+
+router.get('/user/:userId', (req, res, next) => {
+  Portfolio.findAll({ where: { id: +req.params.userId, status: 'open' } })
+    .then(portfolios => {
+      let portfolioIds = portfolios.map(portfolio => portfolio.id)
+      Stock.findAll()
+        .then(stocks => {
+          let newStocks = stocks.filter(stock =>
+            portfolioIds.indexOf(stock.portfolio.Id) > -1)
+          let portfoliosToSend = {}
+          newStocks.forEach(stock => {
+            if (!portfoliosToSend[stock.portfolioId]) {
+              portfoliosToSend[stock.portfolioId] = 0
+              portfoliosToSend[stock.portfolioId] += stock.marketOpenPrice
+            } else portfoliosToSend[stock.portfolioId] += stock.marketOpenPrice
+          })
+          const data = []
+          let key = 0
+          for (let id in portfoliosToSend) {
+            data.push({ key: key++, stockId: id, currentPrice: portfolioToSend[id] })
+          }
+          res.json(data)
+        })
+    })
+})
+
