@@ -21,7 +21,7 @@ export const fetchPortfolio = () => dispatch =>
 
 export const removeStock = stock => dispatch =>
   axios
-    .put(`/api/stock`, stock)
+    .put(`/api/portfolio`, stock)
     .then(() => dispatch(removeFromPortfolio(stock)))
     .catch(error => console.error(`Removing ${stock} unsuccessful:`, error))
 

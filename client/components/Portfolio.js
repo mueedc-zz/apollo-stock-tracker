@@ -10,6 +10,7 @@ const Portfolio = ({ portfolio }) => (
       <thead>
         <tr>
           <th>Symbol</th>
+          {' '}
           <th>Price</th>
           <th>Threshhold</th>
           <th>High Since Buy</th>

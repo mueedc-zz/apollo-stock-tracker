@@ -10,7 +10,7 @@ const PortfolioItem = ({ stock, removeStock }) => (
     <td>{console.log('stock high since buy')}</td>
     <td>{console.log('stock sell point since high since buy')}</td>
     <td>
-      <button onClick={() => removeStock(stock.id)}>
+      <button onClick={() => removeStock(stock.symbol)}>
         <span className='removeButton'>Remove Stock</span>
       </button>
     </td>
@@ -18,5 +18,4 @@ const PortfolioItem = ({ stock, removeStock }) => (
 )
 
 const mapDispatch = { removeStock }
-
 export default connect(null, mapDispatch)(PortfolioItem)
