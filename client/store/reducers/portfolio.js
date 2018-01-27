@@ -16,13 +16,19 @@ import {
 export const fetchPortfolio = () => dispatch =>
   axios
     .get(`/api/portfolio/session`)
-    .then(stocks => dispatch(setSessionPortfolio(stocks.data)))
+    .then(stocks => {
+      console.log(stocks)
+      dispatch(setSessionPortfolio(stocks.data))
+      })
     .catch(error => console.error(`Fetching portfolio unsuccessful:`, error))
 
 export const removeStock = stock => dispatch =>
   axios
     .put(`/api/portfolio`, stock)
-    .then(() => dispatch(removeFromPortfolio(stock)))
+    .then(stock => {
+      console.log(stock)
+      dispatch(removeFromPortfolio(stock))
+    })
     .catch(error => console.error(`Removing ${stock} unsuccessful:`, error))
 
 export const addStock = symbol => dispatch =>
@@ -58,10 +64,12 @@ export default function(state = [], action) {
       return state.map(
         stock => (stock.symbol === action.stock.symbol ? action.stock : stock))
     case REMOVE_FROM_PORTFOLIO:
-      return state.filter(stock => stock.symbol !== action.stock.symbol)
+      console.log('state:', state)
+      return portfolio.filter(stock => stock.symbol !== action.stock.symbol)
     case CLEAR_PORTFOLIO:
       return state
     default:
       return state
   }
 }
+

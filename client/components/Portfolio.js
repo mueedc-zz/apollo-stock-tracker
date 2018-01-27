@@ -10,7 +10,6 @@ const Portfolio = ({ portfolio }) => (
       <thead>
         <tr>
           <th>Symbol</th>
-          {' '}
           <th>Price</th>
           <th>Threshhold</th>
           <th>High Since Buy</th>
@@ -20,7 +19,7 @@ const Portfolio = ({ portfolio }) => (
       <tbody>
          {portfolio &&
           portfolio.map(stock => (
-            <PortfolioItem key={stock.id} stock={stock} />
+            <PortfolioItem key={Date.now()} stock={stock} />
           ))}
       </tbody>
     </table>
