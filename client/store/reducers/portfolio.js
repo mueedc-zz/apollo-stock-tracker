@@ -11,6 +11,8 @@ import {
   setSessionPortfolio,
   clearPortfolio,
 } from '../actions/portfolio'
+import { addId } from '../actions/portfolioId'
+import { getStock } from '../../../functions'
 
 // Thunk middleware
 export const fetchPortfolio = () => dispatch =>
@@ -31,15 +33,15 @@ export const removeStock = stock => dispatch =>
     })
     .catch(error => console.error(`Removing ${stock} unsuccessful:`, error))
 
-export const addStock = symbol => dispatch =>
-  axios
-    .get(`/api/stock/${symbol}`)
+export const addStock = symbol => dispatch => {
+  const stock = getStock(symbol)
+  return axios.post(`/api/portfolio`, stock)
     .then(res => {
-      axios.post('/api/stock', res.data)
-      return res.data
+      dispatch(addToPortfolio(res.data))
+      dispatch(addPortfolioId(res.data.portfolioId))
     })
-    .then(data => dispatch(addToPortfolio(data)))
     .catch(error => dispatch(addToPortfolio({ error })))
+}
 
 export const changePortfolio = stock => dispatch =>
   axios
@@ -59,7 +61,7 @@ export default function(state = [], action) {
     case SET_SESSION_PORTFOLIO:
       return action.stocks
     case ADD_TO_PORTFOLIO:
-      return [...state, action.stock]
+      return [action.stock, ...state]
     case UPDATE_PORTFOLIO:
       return state.map(
         stock => (stock.symbol === action.stock.symbol ? action.stock : stock))

@@ -1,6 +1,13 @@
 const nodemailer = require('nodemailer')
+const axios = require('axios')
 
-export default function sendEmail(user, stock) {
+export function getStock (symbol) {
+  return axios.get(`/api/stock/${symbol}`)
+    .then(res => res.data)
+    .catch(err => console.error(err))
+}
+
+export function sendEmail(user, stock) {
   let transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
