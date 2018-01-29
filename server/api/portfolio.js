@@ -57,13 +57,14 @@ router.post('/', (req, res, next) => {
       .catch(next)
   } else if (!req.body.portfolioId) {
     Portfolio.create({
-      userId: null, 
+      userId: req.body.userId, 
       status: 'open'
     })
       .then(portfolio =>
         Stock.create(req.body).then(stock => stock.setPortfolio(portfolio))
       )
       .then(stock => {
+        console.log('req session:', req.session)
         req.session.portfolio.push(stock)
         res.json(stock)
       })
