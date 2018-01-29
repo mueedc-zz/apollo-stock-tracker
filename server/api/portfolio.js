@@ -57,7 +57,7 @@ router.post('/', (req, res, next) => {
       .catch(next)
   } else if (!req.body.portfolioId) {
     Portfolio.create({
-      userId: req.body.userId,
+      userId: null, 
       status: 'open'
     })
       .then(portfolio =>

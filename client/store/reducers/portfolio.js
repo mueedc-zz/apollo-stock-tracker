@@ -12,7 +12,6 @@ import {
   clearPortfolio,
 } from '../actions/portfolio'
 import { addId } from '../actions/portfolioId'
-import { getStock } from '../../../functions'
 
 // Thunk middleware
 export const fetchPortfolio = () => dispatch =>
@@ -33,10 +32,17 @@ export const removeStock = stock => dispatch =>
     })
     .catch(error => console.error(`Removing ${stock} unsuccessful:`, error))
 
-export const addStock = symbol => dispatch => {
-  const stock = getStock(symbol)
+async function getStock (symbol) {
+  const res = await axios.get(`/api/stock/${symbol}`)
+  const data = await res.data
+  return data
+}
+
+export const addStock = symbol => async dispatch => {
+  const stock = await getStock(symbol)
   return axios.post(`/api/portfolio`, stock)
     .then(res => {
+      console.log('res:', res)
       dispatch(addToPortfolio(res.data))
       dispatch(addPortfolioId(res.data.portfolioId))
     })
