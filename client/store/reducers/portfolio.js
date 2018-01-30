@@ -40,13 +40,20 @@ export async function getStock (symbol) {
 
 export const addStock = symbol => async dispatch => {
   const stock = await getStock(symbol)
-  return axios.post(`/api/portfolio`, stock)
-    .then(res => {
-      console.log('res:', res)
-      dispatch(addToPortfolio(res.data))
-      dispatch(addPortfolioId(res.data.portfolioId))
-    })
-    .catch(error => dispatch(addToPortfolio({ error })))
+  console.log(stock)
+  const res = await axios.post('/api/portfolio', stock)
+  console.log('res:', res)
+  const data = await res.data
+  console.log('data:', data)
+  dispatch(addToPortfolio(data))
+  dispatch(addPortfolioId(data.portfolioId))
+// return axios.post(`/api/stock`, stock)
+  //   .then(res => {
+  //     console.log('res:', res)
+  //     dispatch(addToPortfolio(res.data))
+  //     dispatch(addPortfolioId(res.data.portfolioId))
+  //   })
+  //   .catch(error => dispatch(addToPortfolio({ error })))
 }
 
 export const changePortfolio = stock => dispatch =>
