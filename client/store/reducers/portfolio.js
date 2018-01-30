@@ -32,7 +32,7 @@ export const removeStock = stock => dispatch =>
     })
     .catch(error => console.error(`Removing ${stock} unsuccessful:`, error))
 
-async function getStock (symbol) {
+export async function getStock (symbol) {
   const res = await axios.get(`/api/stock/${symbol}`)
   const data = await res.data
   return data
