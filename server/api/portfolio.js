@@ -69,9 +69,10 @@ router.post('/', (req, res, next) => {
       })
       .catch(next)
   } else if (!req.body.portfolioId) {
+    console.log(req.user)
     Portfolio.findOrCreate({
       where: {
-        userId: req.user.id,
+        userId: req.user,
         status: 'open'
       }
     })
