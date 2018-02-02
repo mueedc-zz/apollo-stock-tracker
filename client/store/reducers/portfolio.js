@@ -41,7 +41,10 @@ export async function getStock (symbol) {
 export const addStock = symbol => async dispatch => {
   const stock = await getStock(symbol)
   console.log(stock)
-  const res = await axios.post('/api/portfolio', stock)
+  const res = await axios.post('/api/portfolio', {
+    stock,
+    userId: user.id
+  })
   console.log('res:', res)
   const data = await res.data
   console.log('data:', data)

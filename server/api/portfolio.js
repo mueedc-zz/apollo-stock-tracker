@@ -53,6 +53,8 @@ router.delete('/session', (req, res, next) => {
 })
 
 router.post('/', (req, res, next) => {
+  console.log('req.user:', req.user)
+  console.log('req.portfolio:', req.portfolio)
   if (req.body.userId) {
     Portfolio.findOrCreate({
       where: {
@@ -80,7 +82,7 @@ router.post('/', (req, res, next) => {
         Stock.create(req.body).then(stock => stock.setPortfolio(portfolio))
       )
       .then(stock => {
-        console.log('req:', req.user.portfolio)
+        console.log('!!!!!!!!!req.user:', req.user.portfolio)
         req.user.portfolio.push(stock)
         res.json(stock)
       })
