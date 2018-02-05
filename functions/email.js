@@ -1,6 +1,6 @@
 const nodemailer = require('nodemailer')
 
-export default function sendEmail(user, stock) {
+export default function sendEmail (user, stock) {
   let transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {

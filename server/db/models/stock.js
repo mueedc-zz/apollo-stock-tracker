@@ -10,6 +10,8 @@ const Stock = db.define('stock', {
     type: Sequelize.DOUBLE,
     allowNull: false
   },
+  dayHigh: Sequelize.DOUBLE,
+  portfolioId: Sequelize.INTEGER,
   sellPrice: Sequelize.DOUBLE,
   maxSinceBuy: Sequelize.INTEGER,
   sellPriceSinceMax: Sequelize.INTEGER

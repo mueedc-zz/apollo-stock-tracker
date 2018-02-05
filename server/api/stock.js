@@ -15,7 +15,8 @@ router.use('/:symbol', (req, res, next) => {
       ? next(err)
       : res.json({
         symbol: quotes.price.symbol,
-        marketOpenPrice: quotes.price.regularMarketOpen
+        marketOpenPrice: quotes.price.regularMarketOpen,
+        dayHigh: quotes.price.regularMarketDayHigh
       })
   })
 })
@@ -24,9 +25,10 @@ router.post('/', (req, res, next) => {
   Stock.create({
     symbol: req.body.symbol,
     marketOpenPrice: req.body.marketOpenPrice,
-    portfolioId: req.body.userId
+    portfolioId: req.body.portfolioId,
+    dayHigh: req.body.dayHigh
   })
-    .then(data => res.sendStatus(201))
+    .then(() => res.sendStatus(201))
     .catch(next)
 })
 

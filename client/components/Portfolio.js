@@ -1,5 +1,5 @@
 import React from 'react'
-import {connect} from 'react-redux'
+import { connect } from 'react-redux'
 import PortfolioItem from './PortfolioItem'
 import AddToPortfolio from './AddToPortfolio'
 
@@ -19,7 +19,7 @@ const Portfolio = ({ portfolio }) => (
       <tbody>
          {portfolio &&
           portfolio.map(stock => (
-            <PortfolioItem key={Date.now()} stock={stock} />
+            <PortfolioItem key={stock.id} stock={stock} />
           ))}
       </tbody>
     </table>

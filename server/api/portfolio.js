@@ -27,7 +27,7 @@ router.get('/session', (req, res, next) => {
       }
     })
       .then(foundPortfolio => {
-        if (foundPortfolio) req.session.portfolio = foundPortfolio
+        if (foundPortfolio) req.session.portfolio = foundPortfolio.stock
         res.send(req.session.portfolio)
       })
       .catch(next)
@@ -38,13 +38,12 @@ router.get('/session', (req, res, next) => {
         status: 'open'
       }
     })
-    .then(foundPortfolio => {
-      if (foundPortfolio) req.session.portfolio = foundPortfolio
-      res.send(req.session.portfolio)
-    })
-    .catch(next)
-  } 
-  else res.send(req.session.portfolio)
+      .then(foundPortfolio => {
+        if (foundPortfolio) req.session.portfolio = foundPortfolio.stock
+        res.send(req.session.portfolio)
+      })
+      .catch(next)
+  }
 })
 
 router.delete('/session', (req, res, next) => {
@@ -53,58 +52,26 @@ router.delete('/session', (req, res, next) => {
 })
 
 router.post('/', (req, res, next) => {
-  console.log('req.user:', req.user)
-  console.log('req.portfolio:', req.portfolio)
-  if (req.body.userId) {
-    Portfolio.findOrCreate({
-      where: {
-        userId: req.body.userId,
-        status: 'open'
-      }
+  Portfolio.findOrCreate({
+    where: {
+      userId: req.user.id,
+      status: 'open'
+    }
+  })
+    .spread((portfolio, createdPortfolioBool) =>
+      Stock.create(req.body).then(stock => stock.setPortfolio(portfolio))
+    )
+    .then(stock => {
+      if (!req.session.portfolio) req.session.portfolio = []
+      req.session.portfolio.push(stock)
+      res.send(stock)
     })
-      .spread((portfolio, createdPortfolioBool) =>
-        Stock.create(req.body).then(stock => stock.setPortfolio(portfolio))
-      )
-      .then(stock => {
-        req.session.portfolio.push(stock)
-        res.json(stock)
-      })
-      .catch(next)
-  } else if (!req.body.portfolioId) {
-    console.log(req.user)
-    Portfolio.findOrCreate({
-      where: {
-        userId: req.user,
-        status: 'open'
-      }
-    })
-      .then(portfolio =>
-        Stock.create(req.body).then(stock => stock.setPortfolio(portfolio))
-      )
-      .then(stock => {
-        console.log('!!!!!!!!!req.user:', req.user.portfolio)
-        req.user.portfolio.push(stock)
-        res.json(stock)
-      })
-      .catch(next)
-  } else {
-    Portfolio.findById(req.user.portfolio)
-      .then(portfolio => 
-        Stock.create(req.body)
-          .then(stock => stock.setPortfolio(portfolio))
-      )
-      .then(stock => {
-        req.user.portfolio.push(stock)
-        res.json(stock)
-      })
-      .catch(next)
-  }
+    .catch(next)
 })
 
 router.put('/', (req, res, next) => {
-  console.log(req.session)
   req.session.portfolio = req.session.portfolio.filter(
-    sessionStock => sessionStock.id !== req.body.id
+    stock => stock.symbol !== req.body.symbol
   )
   Stock.destroy({ where: { id: req.body.id } })
     .then(deletedRows => {
@@ -114,7 +81,8 @@ router.put('/', (req, res, next) => {
 })
 
 router.put('/:id', (req, res, next) => {
-  req.portfolio.update(req.body)
+  req.portfolio
+    .update(req.body)
     .then(port => res.json(port))
     .catch(next)
 })
@@ -123,20 +91,21 @@ router.get('/user/:id', (req, res, next) => {
   Portfolio.findAll({ where: { id: +req.params.id, status: 'open' } })
     .then(portfolios => {
       let portfolioIds = portfolios.map(portfolio => portfolio.id)
-      Stock.findAll()
-        .then(stocks => {
-          let newStocks = stocks.filter(stock =>
-            portfolioIds.indexOf(stock.portfolioId) > -1)
-          let portfoliosToSend = {}
-          newStocks.forEach(stock => portfoliosToSend[stock.symbol] = stock.marketOpenPrice)
-          const data = []
-          let key = 1
-          for (let id in portfoliosToSend) {
-            data.push({ key: key++, symbol: id, buyPrice: portfoliosToSend[id] })
-          }
-          res.json(data)
-        })
+      Stock.findAll().then(stocks => {
+        let newStocks = stocks.filter(
+          stock => portfolioIds.indexOf(stock.portfolioId) > -1
+        )
+        let portfoliosToSend = {}
+        newStocks.forEach(
+          stock => (portfoliosToSend[stock.symbol] = stock.marketOpenPrice)
+        )
+        const data = []
+        let key = 1
+        for (let id in portfoliosToSend) {
+          data.push({ key: key++, symbol: id, buyPrice: portfoliosToSend[id] })
+        }
+        res.json(data)
+      })
     })
     .catch(next)
 })
-

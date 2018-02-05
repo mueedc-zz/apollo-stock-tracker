@@ -15,14 +15,13 @@ export const auth = (userBody, method) => dispatch =>
     .post(`/auth/${method}`, userBody)
     .then(res => {
       console.log('userBody: ', userBody)
+      console.log('res:', res)
       dispatch(getUser(res.data))
-      axios.put(`/api/portfolio/${userBody.portfolioId}`, {
-        userId: res.data.id
-      })
-    })
-    .then(() => {
+      return userBody
+     })
+    .then(user => {
       console.log('here')
-      dispatch(fetchPortfolio())
+      dispatch(fetchPortfolio(user.id))
       history.push('/portfolio')
     })
     .catch(error => dispatch(getUser({ error })))

@@ -9,54 +9,36 @@ import {
   removeFromPortfolio,
   updatePortfolio,
   setSessionPortfolio,
-  clearPortfolio,
+  clearPortfolio
 } from '../actions/portfolio'
-import { addId } from '../actions/portfolioId'
+import getStock from '../../../functions/stock'
 
 // Thunk middleware
-export const fetchPortfolio = () => dispatch =>
+export const fetchPortfolio = id => dispatch =>
   axios
-    .get(`/api/portfolio/session`)
-    .then(stocks => {
-      console.log(stocks)
-      dispatch(setSessionPortfolio(stocks.data))
-      })
+    .get(`/api/portfolio/user/${id}`)
+    .then(res => {
+      dispatch(setSessionPortfolio(res.data))
+    })
     .catch(error => console.error(`Fetching portfolio unsuccessful:`, error))
 
 export const removeStock = stock => dispatch =>
   axios
     .put(`/api/portfolio`, stock)
-    .then(stock => {
-      console.log(stock)
-      dispatch(removeFromPortfolio(stock))
-    })
+    .then(stock => dispatch(removeFromPortfolio(stock)))
     .catch(error => console.error(`Removing ${stock} unsuccessful:`, error))
-
-export async function getStock (symbol) {
-  const res = await axios.get(`/api/stock/${symbol}`)
-  const data = await res.data
-  return data
-}
 
 export const addStock = symbol => async dispatch => {
   const stock = await getStock(symbol)
-  console.log(stock)
+  const user = await axios.get('auth/me')
   const res = await axios.post('/api/portfolio', {
-    stock,
-    userId: user.id
+    symbol: stock.symbol,
+    marketOpenPrice: stock.marketOpenPrice,
+    dayHigh: stock.dayHigh,
+    portfolioId: user.data.id
   })
-  console.log('res:', res)
   const data = await res.data
-  console.log('data:', data)
   dispatch(addToPortfolio(data))
-  dispatch(addPortfolioId(data.portfolioId))
-// return axios.post(`/api/stock`, stock)
-  //   .then(res => {
-  //     console.log('res:', res)
-  //     dispatch(addToPortfolio(res.data))
-  //     dispatch(addPortfolioId(res.data.portfolioId))
-  //   })
-  //   .catch(error => dispatch(addToPortfolio({ error })))
 }
 
 export const changePortfolio = stock => dispatch =>
@@ -72,7 +54,7 @@ export const logoutPortfolio = () => dispatch =>
     .catch(() => dispatch(clearPortfolio()))
 
 // Reducer
-export default function(state = [], action) {
+export default function (state = [], action) {
   switch (action.type) {
     case SET_SESSION_PORTFOLIO:
       return action.stocks
@@ -80,14 +62,13 @@ export default function(state = [], action) {
       return [action.stock, ...state]
     case UPDATE_PORTFOLIO:
       return state.map(
-        stock => (stock.symbol === action.stock.symbol ? action.stock : stock))
+        stock => (stock.symbol === action.stock.symbol ? action.stock : stock)
+      )
     case REMOVE_FROM_PORTFOLIO:
-      console.log('state:', state)
-      return portfolio.filter(stock => stock.symbol !== action.stock.symbol)
+      return state.filter(stock => stock !== action.stock)
     case CLEAR_PORTFOLIO:
       return state
     default:
       return state
   }
 }
-
