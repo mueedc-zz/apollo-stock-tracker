@@ -1,12 +1,5 @@
 # Apollo Stock Tracker
 
-This project was bootstrapped using the FullstackAcademy `boilermaker` boilerplate. Periodically run
-```
-git fetch boilermaker
-git merge boilermaker/master
-```
-to ensure the master boilerplate is up-to-date.
-
 ## About
 
 The Apollo Stock Tracker application is meant for users to track their stock portfolios. The main function of the application is to send emails to users when their stocks have dropped below a certain percetange that they themselves have set. This email is meant to notify the user that the specific stock has dropped in price and selling should be in the forefront of their minds.
@@ -15,7 +8,7 @@ The app also tracks the highest market price of the stock since the purchase pri
 
 ## Start
 
-`npm run start-dev` will make great things happen!
+`npm run start-dev` or `yarn start-dev` will make great things happen!
 
-If you want to run the server and/or webpack separately, you can also `npm run start-server` and `npm run build-client`.
+If you want to run the server and/or webpack separately, you can also `npm run (yarn) start-server` and `npm run (yarn) build-client`.
 
