@@ -59,13 +59,13 @@ export default function (state = [], action) {
     case SET_SESSION_PORTFOLIO:
       return action.stocks
     case ADD_TO_PORTFOLIO:
-      return [action.stock, ...state]
+      return [...state, action.stock]
     case UPDATE_PORTFOLIO:
       return state.map(
         stock => (stock.symbol === action.stock.symbol ? action.stock : stock)
       )
     case REMOVE_FROM_PORTFOLIO:
-      return state.filter(stock => stock !== action.stock)
+      return state.filter(stock.symbol => stock.symbol !== action.stock.symbol)
     case CLEAR_PORTFOLIO:
       return state
     default:
