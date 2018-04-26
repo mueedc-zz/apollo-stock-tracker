@@ -9,18 +9,13 @@ const PortfolioItem = ({ stock, remove }) => (
     <td>{+stock.marketOpenPrice - +stock.marketOpenPrice * 0.25}</td>
     <td>{console.log('stock high since buy')}</td>
     <td>{console.log('stock sell point since high since buy')}</td>
-    <td>
-      <button onClick={remove(stock)}>
-        <span className='removeButton'>Remove Stock</span>
-      </button>
-    </td>
   </tr>
 )
 
-const mapDispatch = dispatch => ({
-  remove(stock) {
-    console.log(stock)
-    dispatch(removeStock(stock))
-  }
-})
-export default connect(null, mapDispatch)(PortfolioItem)
+// const mapDispatch = dispatch => ({
+//   remove(stock) {
+//     console.log(stock)
+//     dispatch(removeStock(stock))
+//   }
+// })
+export default PortfolioItem

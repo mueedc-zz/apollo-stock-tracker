@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import PortfolioItem from './PortfolioItem'
 import AddToPortfolio from './AddToPortfolio'
 
-const Portfolio = ({ portfolio }) => (
+const Portfolio = ({ portfolio, removeStock }) => (
   <div>
     <AddToPortfolio />
     <table>
@@ -20,6 +20,11 @@ const Portfolio = ({ portfolio }) => (
          {portfolio &&
           portfolio.map(stock => (
             <PortfolioItem key={stock.id} stock={stock} />
+            <button
+              onClick={stock.id => removeStock(stock.id)}
+            >
+              Remove Stock
+            </button>
           ))}
       </tbody>
     </table>
@@ -27,4 +32,7 @@ const Portfolio = ({ portfolio }) => (
 )
 
 const mapState = ({ portfolio }) => ({ portfolio })
-export default connect(mapState)(Portfolio)
+const mapDispatch = { removeStock }
+
+export default connect(mapState, mapDispatch)(Portfolio)
+
